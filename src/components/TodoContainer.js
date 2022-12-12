@@ -3,27 +3,31 @@ import Header from "./Header";
 import TodosList from "./TodosList";
 import InputTodo from "./InputTodo";
 import { v4 as uuidv4 } from "uuid";
+import { saveTasks, loadTasks } from "./LocalStorage";
 
 class TodoContainer extends React.Component {
   state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: "Setup development environment",
-        completed: true
-      },
-      {
-        id: uuidv4(),
-        title: "Develop website and add content",
-        completed: false
-      },
-      {
-        id: uuidv4(),
-        title: "Deploy to live server",
-        completed: false
-      }
-    ]
+    todos: loadTasks()
+    // // default values:
+    // [
+      // {
+      //   id: uuidv4(),
+      //   title: "Setup development environment",
+      //   completed: true
+      // },
+      // {
+      //   id: uuidv4(),
+      //   title: "Develop website and add content",
+      //   completed: false
+      // },
+      // {
+      //   id: uuidv4(),
+      //   title: "Deploy to live server",
+      //   completed: false
+      // }
+    // ]
    };
+
 
    handleChange = id => {
     this.setState(prevState => ({
@@ -60,7 +64,19 @@ class TodoContainer extends React.Component {
     });
   };
 
+  setUpdate = (updatedTitle, id) => {
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          todo.title = updatedTitle
+        }
+        return todo
+      }),
+    })
+  }
+
   render() {
+    saveTasks(this.state.todos);
     return (
       <div className="container">
         <div className="inner">
@@ -70,6 +86,7 @@ class TodoContainer extends React.Component {
             todos={this.state.todos}
             handleChangeProps={this.handleChange}
             deleteTodoProps={this.delTodo}
+            setUpdate={this.setUpdate}
           />
         </div>
       </div>
