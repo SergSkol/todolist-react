@@ -1,23 +1,19 @@
 import React from "react"
-import { Link, useMatch , Route } from "react-router-dom"
-import SinglePage from "./SinglePage"
 
 const About = () => {
-  const { url, path } = useMatch()
-
   return (
     <div className="about__content">
       <ul className="about__list">
         <li>
-          <Link to={`${url}/about-app`}>About App</Link>
+          This web site was created follow the tutorial: 
+          React Tutorial From Scratch: A Step-by-Step Guide (2021)!
+          https://ibaslogic.com/react-tutorial-for-beginners/
         </li>
         <li>
-          <Link to={`${url}/about-author`}>About Author</Link>
+          This tutorial, divided into several parts, is very comprehensive, 
+          and covers all main concepts about React, from the very basics to some intermediate topics. 
         </li>
       </ul>
-      <Route path={`${path}/:slug`}>
-        <SinglePage />
-      </Route>
     </div>
   )
 }
